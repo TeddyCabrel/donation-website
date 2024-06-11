@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contact us</title>
+    <link th:href="@{/css/styleProjectDetails.css}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var leftDiv = document.querySelector('.left');
+            var containerAfterStyle = document.createElement('style');
+            var backgroundImageURL = getComputedStyle(leftDiv).backgroundImage;
+
+            containerAfterStyle.innerHTML = '.container:after { background-image: ' + backgroundImageURL + '; }';
+            document.head.appendChild(containerAfterStyle);
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="contact-box">
+        <div class="left"  th:style="'background-image: url('+ @{'../images/' + ${projectSelect.photoUrl}} +');'"></div>
+        <div class="right">
+
+            <h2 th:text="${projectSelect.title}"></h2>
+            <script src="https://www.paypal.com/sdk/js?client-id=BAAwxgzQWOGhoNpdGCoZ3RZiC0VN6HVVULbEtE0CYEg2SGZHj4X6lZJn8W5LJU7mqoBxqjCDwdN6KtcKFY&components=hosted-buttons&disable-funding=venmo&currency=CAD"></script>
+            <div id="paypal-container-WHDYMTDH5NAXA"></div>
+            <script>
+                paypal.HostedButtons({
+                    hostedButtonId: "WHDYMTDH5NAXA",
+                    onApprove: function(data, actions) {
+                        // Récupérer le montant du paiement
+                        var paymentAmount = data.order.total_amount.value;
+
+                        // Faire une requête AJAX pour mettre à jour la variable montant
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "/updateProjectAmount", true);
+                        xhr.setRequestHeader("Content-Type", "application/json");
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                console.log("Montant mis à jour avec succès !");
+                            }
+                        };
+                        var jsonData = JSON.stringify({ montant: paymentAmount });
+                        xhr.send(jsonData);
+                    }
+                }).render("#paypal-container-WHDYMTDH5NAXA");
+            </script>
+
+            <a th:href="@{/Projet}"><button type="button"  class="btn">Go back</button></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
