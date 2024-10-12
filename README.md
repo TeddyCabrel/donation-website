@@ -44,9 +44,9 @@ Technologies Utilisées:
  - Spring Security (pour l'authentification)
  - MySQL (pour le stockage des données)
 
- - 
+
 Comment Lancer:
- - Clonez le dépôt.
- - Installez les dépendances requises avec Gradle ou Maven.
- - Configurez la connexion à la base de données dans les propriétés de l'application.
- - Lancez l'application.
+ 1- Clonez le dépôt.
+ 2- Installez les dépendances requises avec Gradle ou Maven.
+ 3- Configurez la connexion à la base de données dans les propriétés de l'application.
+ 4- Lancez l'application.
